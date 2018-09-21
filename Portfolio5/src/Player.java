@@ -14,5 +14,13 @@ public abstract class Player {
 	public void addDomino(Domino domino) {
 		playersDominos.add(domino);
 	}
+	
+	public boolean hasDominos() {
+		boolean hasDominos = true;
+		if (playersDominos.size() == 0) {
+			hasDominos = false;
+		}
+		return hasDominos;
+	}
 
 }

@@ -11,10 +11,15 @@ public class DominoGame {
 		dominoPool = new DominoPool();
 		userDialog = new Userdialog();
 		dominos = dominoPool.provideShuffledDominoHeap();
-		for (Domino domino:dominos) {
-			System.out.println(domino);
-		}
 		
+		dealOutDomninos();
+		while () {
+			
+		}
+	}
+	
+	public void addPlayer(Player player) {
+		players.add(player);
 	}
 	
 	public void dealOutDomninos() {
@@ -24,5 +29,4 @@ public class DominoGame {
 			}
 		}
 	}
-
 }
