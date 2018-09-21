@@ -16,4 +16,8 @@ public class Domino {
 	public int getRight() {
 		return right;
 	}
+	
+	public void printDomino() {
+		System.out.println("[" + getLeft() + "|" + getRight() + "]");
+	}
 }
