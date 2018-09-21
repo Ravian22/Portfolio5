@@ -48,9 +48,11 @@ public class DominoGame {
 		return gameRunning;
 	}
 	
+	
+	
 	public void printCurrentMove() {
 		System.out.print("Auswahlmöglichkeit: ");
-		uncoveredDomino.printDomino();
+		System.out.println(uncoveredDomino.showDomino());
 		System.out.print("Ihre Steine: ");
 		
 	}

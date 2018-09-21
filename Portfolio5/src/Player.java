@@ -14,6 +14,21 @@ public abstract class Player {
 	public void addDomino(Domino domino) {
 		playersDominos.add(domino);
 	}
+	
+	public List<Domino> getPlayersDominos() {
+		return playersDominos;
+	}
+	
+	public String showPlayersDominos() {
+		StringBuilder playerBuilder = new StringBuilder();
+		if (!isComputer) {
+			for (Domino domino: playersDominos) {
+				playerBuilder.append(domino.showDomino());
+				playerBuilder.append(" ");
+			}
+		}
+		return playerBuilder.toString();
+	}
 
 	public boolean hasDominos() {
 		boolean hasDominos = true;
