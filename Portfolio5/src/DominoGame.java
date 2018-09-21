@@ -29,4 +29,13 @@ public class DominoGame {
 			}
 		}
 	}
+	
+	public void gameRunning() {
+		boolean gameRunning = true;
+		int counter = 0;
+		while (gameRunning && counter < players.size()) {
+			gameRunning = players.get(counter).hasDominos();
+			counter++;
+		}
+	}
 }
