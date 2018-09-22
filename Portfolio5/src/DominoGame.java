@@ -7,11 +7,12 @@ public class DominoGame {
 	private Userdialog userDialog;
 	private Domino uncoveredDomino;
 	private List<Domino> dominos;
-	private List<Player> players;
+	private List<HumanPlayer> humanPlayers;
+	private List<ComputerPlayer> computerPlayers;
 
 	public DominoGame() {
 		dominos = new ArrayList<Domino>();
-		players = new ArrayList<Player>();
+		humanPlayers = new ArrayList<HumanPlayer>();
 	}
 
 	public void play() {
@@ -20,34 +21,45 @@ public class DominoGame {
 		dominos = dominoPool.provideShuffledDominoHeap();
 
 		dealOutDomninos();
-
+		uncoveredDomino = dominos.get(0);
+		dominos.remove(0);
 		while (gameRunning()) {
-			uncoveredDomino = dominos.get(0);
-			dominos.remove(0);
-			for (Player player : players) {
-				if (!player.isComputer()) {
+			for (Player player : humanPlayers) {
 					printPlayerMove(player);
-					userDialog.getUserInput("Auswahlmöglichkeiten: ", player.showPossibleSelection(uncoveredDomino));
+					int selectedDomino = userDialog.getUserInput("Auswahlmöglichkeiten: ", 
+										player.showPossibleSelection(uncoveredDomino));
+					if (player.showPossibleSelection(uncoveredDomino)[selectedDomino].equals("ziehen")) {
+						
+					}
+					player.getPlayersDominos().remove(selectedDomino);
+					setUncoveredDomino(selectedDomino);
 				}
 			}
 		}
 	}
 
-	public void addPlayer(Player player) {
-		players.add(player);
+	public void addHumanPlayer(HumanPlayer player) {
+		humanPlayers.add(player);
 	}
 
 	public void dealOutDomninos() {
-		for (int i = 0; i < players.size(); i++) {
-			for (int counter = i*5; counter <(i*5+4);counter++) {
-				players.get(i).addDomino(dominos.get(counter));
+		for (int i = 0; i < humanPlayers.size(); i++) {
+			for (int counter = i*5; counter <(i*5+5);counter++) {
+				humanPlayers.get(i).addDomino(dominos.get(counter));
 				dominos.remove(counter);
 			}
 		}
 	}
+	
+	public void takeOneDomino(Player player) {
+		player.addDomino(dominos.get(0));
+		dominos.remove(0);
+	}
 
 	public void setUncoveredDomino(Domino domino) {
 		if (uncoveredDomino.getRight() == domino.getLeft()) {
+			uncoveredDomino = new Domino(uncoveredDomino.getLeft(), domino.getRight());
+		} else {
 			uncoveredDomino = new Domino(domino.getLeft(), uncoveredDomino.getRight());
 		}
 	}
@@ -55,8 +67,8 @@ public class DominoGame {
 	public boolean gameRunning() {
 		boolean gameRunning = true;
 		int counter = 0;
-		while (gameRunning && counter < players.size()) {
-			gameRunning = players.get(counter).hasDominos();
+		while (gameRunning && counter < humanPlayers.size()) {
+			gameRunning = humanPlayers.get(counter).hasDominos();
 			counter++;
 		}
 		return gameRunning;
@@ -67,8 +79,6 @@ public class DominoGame {
 		System.out.println(uncoveredDomino.showDomino());
 		System.out.print("Ihre Steine: ");
 		System.out.println("[" + player.showAllPlayerDominos() + "]");
-		System.out.println(player.showPossibleSelection(uncoveredDomino));
-
 	}
 
 	public void printComputerMove(Player player) {

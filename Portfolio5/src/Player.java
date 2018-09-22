@@ -52,7 +52,7 @@ public abstract class Player {
 		return playerBuilder.toString();
 	}
 
-	public String showPossibleSelection(Domino uncoveredDomino) {
+	public String[] showPossibleSelection(Domino uncoveredDomino) {
 		return null;
 	}
 }

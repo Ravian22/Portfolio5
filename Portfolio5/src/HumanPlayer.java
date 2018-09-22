@@ -6,15 +6,15 @@ public class HumanPlayer extends Player{
 		super(isComputer);
 	}	
 
-	public String showPossibleSelection(Domino uncoveredDomino) {
-		StringBuilder playerBuilder = new StringBuilder();
+	public String[] showPossibleSelection(Domino uncoveredDomino) {
+		
 		List<Domino> possibleSelections = getPossibleSelection(uncoveredDomino);
+		String[] selectionString = new String[getPossibleSelection(uncoveredDomino).size()+1];
+		
 		for (int i=0; i < possibleSelections.size(); i++) {
-			playerBuilder.append("(");
-			playerBuilder.append(i);
-			playerBuilder.append(") ");
-			playerBuilder.append(possibleSelections.get(i).showDomino());
+			selectionString[i] = possibleSelections.get(i).showDomino();
 		}
-		return playerBuilder.toString();
+		selectionString[selectionString.length-1] = "ziehen";
+		return selectionString;
 	}
 }
