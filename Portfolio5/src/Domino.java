@@ -21,4 +21,12 @@ public class Domino {
 		String domino = "[" + getLeft() + "|" + getRight() + "]";
 		return domino;
 	}
+	
+	public boolean fitsBothSides(Domino domino) {
+		boolean fits = false;
+		if(this.getLeft() == domino.getRight() && this.getRight() == domino.getLeft()) {
+			fits = true;
+		}
+		return fits;
+	}
 }
