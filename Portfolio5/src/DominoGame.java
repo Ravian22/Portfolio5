@@ -4,6 +4,8 @@ import java.util.List;
 
 public class DominoGame {
 
+	public static final int NUMBER_FIT_DOMINO_LEFT = 0;
+	public static final int NUMBER_FIT_DOMINO_RIGHT = 1;
 	private DominoPool dominoPool;
 	private Userdialog userDialog;
 	private Domino uncoveredDomino;
@@ -43,12 +45,22 @@ public class DominoGame {
 		setupGame();
 		int counter = 0;
 		while (gameRunning() && !drawGame()) {
-
-			List<Domino> possibleSelection = players.get(counter).getPossibleSelection(uncoveredDomino);
+			Domino playedDomino;
 
 			if (!players.get(counter).isComputer()) {
 				printPlayerMove(players.get(counter));
-				humanPlays(players.get(counter), possibleSelection);
+				playedDomino = players.get(counter).play(uncoveredDomino);
+				if (playedDomino == null) {
+					drawDomino(players.get(0));
+				} else {
+					if(playedDomino.fitsBothSides(uncoveredDomino)) {
+						if (players.get(counter).chooseSide() == NUMBER_FIT_DOMINO_LEFT) {
+							uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
+						} else {
+							uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
+						}
+					}
+				}
 			} else {
 				printComputerMove(players.get(counter));
 				computerPlays(players.get(counter), possibleSelection);
@@ -73,42 +85,6 @@ public class DominoGame {
 				player.addDomino(dominos.get(0));
 				dominos.remove(0);
 			}
-		}
-	}
-
-	public void humanPlays(Player player, List<Domino> possibleSelection) {
-		Domino selectedDomino;
-		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ",
-				player.showPossibleSelection(uncoveredDomino));
-		if (possibleSelection.get(selectedInput) == null) {
-			drawDomino(player);
-		} else {
-			selectedDomino = player.selectDomino(selectedInput, uncoveredDomino);
-			if (selectedDomino.fitsBothSides(uncoveredDomino)) {
-				String[] chooseSide = new String[2];
-				chooseSide[0] = "links anlegen";
-				chooseSide[1] = "rechts anlegen";
-				selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", chooseSide);
-				if (selectedInput == 0) {
-					uncoveredDomino = new Domino(selectedDomino.getLeft(), uncoveredDomino.getRight());
-				} else {
-					uncoveredDomino = new Domino(selectedDomino.getRight(), uncoveredDomino.getLeft());
-				}
-			} else {
-				setUncoveredDomino(selectedDomino);
-			}
-		}
-	}
-
-	public void computerPlays(Player player, List<Domino> possibleSelection) {
-		Domino selectedDomino;
-		selectedDomino = player.selectDomino(0, uncoveredDomino);
-		if (selectedDomino == null) {
-			drawDomino(player);
-			System.out.println("ziehe");
-		} else {
-			System.out.println(selectedDomino.showDomino());
-			setUncoveredDomino(selectedDomino);
 		}
 	}
 

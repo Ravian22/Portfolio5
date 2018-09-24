@@ -36,4 +36,22 @@ public class ComputerPlayer extends Player {
 		return null;
 	}
 
+	@Override
+	public Domino play(Domino uncoveredDomino) {
+		Domino selectedDomino;
+		selectedDomino = selectDomino(0, uncoveredDomino);
+		if (selectedDomino == null) {
+			System.out.println("ziehe");
+		} else {
+			System.out.println(selectedDomino.showDomino());
+		}
+		return selectedDomino;
+	}
+
+	@Override
+	public int chooseSide() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

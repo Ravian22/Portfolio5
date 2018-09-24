@@ -16,6 +16,10 @@ public abstract class Player {
 	public abstract String[] showPossibleSelection(Domino uncoveredDomino);
 
 	public abstract Domino selectDomino(int selectedNumber, Domino uncoveredDomino);
+	
+	public abstract Domino play(Domino uncoveredDomino);
+	
+	public abstract int chooseSide();
 
 	public void addDomino(Domino domino) {
 		playersDominos.add(domino);
@@ -40,7 +44,7 @@ public abstract class Player {
 	public boolean hasDominos() {
 		boolean hasDominos = true;
 
-		if (playersDominos.size() == 0) {
+		if (playersDominos.isEmpty()) {
 			hasDominos = false;
 		}
 		return hasDominos;
@@ -56,7 +60,7 @@ public abstract class Player {
 	public List<Domino> getPossibleSelection(Domino uncoveredDomino) {
 		List<Domino> possibleSelections = new ArrayList<Domino>();
 		for (Domino domino : playersDominos) {
-			if (uncoveredDomino.getLeft() == domino.getRight() || uncoveredDomino.getRight() == domino.getLeft()) {
+			if (uncoveredDomino.fitsDomino(domino)) {
 				possibleSelections.add(domino);
 			}
 		}

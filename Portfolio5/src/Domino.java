@@ -22,11 +22,19 @@ public class Domino {
 		return domino;
 	}
 	
-	public boolean fitsBothSides(Domino domino) {
+	public boolean fitsDomino(Domino domino) {
 		boolean fits = false;
-		if(this.getLeft() == domino.getRight() && this.getRight() == domino.getLeft()) {
+		if(this.getLeft() == domino.getRight() || this.getRight() == domino.getLeft()) {
 			fits = true;
 		}
 		return fits;
+	}
+	
+	public boolean fitsBothSides(Domino domino) {
+		boolean fitsBoth = false;
+		if(this.getLeft() == domino.getRight() && this.getRight() == domino.getLeft()) {
+			fitsBoth = true;
+		}
+		return fitsBoth;
 	}
 }
