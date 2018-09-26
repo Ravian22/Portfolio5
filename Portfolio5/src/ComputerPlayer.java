@@ -38,14 +38,20 @@ public class ComputerPlayer extends Player {
 
 	@Override
 	public Domino play(Domino uncoveredDomino) {
-		Domino selectedDomino;
-		selectedDomino = selectDomino(0, uncoveredDomino);
-		if (selectedDomino == null) {
+		int selectedNumber;
+		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
+		
+		if(isRandom()) {
+			selectedNumber = ThreadLocalRandom.current().nextInt(RANDOM_NUMBER_MIN_VALUE, possibleSelection.size());
+		} else {
+			selectedNumber = 0;
+		}
+		if (possibleSelection.get(selectedNumber) == null) {
 			System.out.println("ziehe");
 		} else {
-			System.out.println(selectedDomino.showDomino());
+			System.out.println(possibleSelection.get(selectedNumber).showDomino());
 		}
-		return selectedDomino;
+		return possibleSelection.get(selectedNumber);
 	}
 
 	@Override

@@ -49,10 +49,8 @@ public class DominoGame {
 
 			if (!players.get(counter).isComputer()) {
 				printPlayerMove(players.get(counter));
-				playedDomino = players.get(counter).play(uncoveredDomino);
-				if (playedDomino == null) {
-					drawDomino(players.get(0));
-				} else {
+				if (players.get(counter).canPlay(uncoveredDomino)) {
+					playedDomino = players.get(counter).play(uncoveredDomino);
 					if(playedDomino.fitsBothSides(uncoveredDomino)) {
 						if (players.get(counter).chooseSide() == NUMBER_FIT_DOMINO_LEFT) {
 							uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
@@ -60,10 +58,13 @@ public class DominoGame {
 							uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
 						}
 					}
+				} else {
+					System.out.println("Keine Auswahlmöglichkeit");
+					drawDomino(players.get(0));
 				}
 			} else {
 				printComputerMove(players.get(counter));
-				computerPlays(players.get(counter), possibleSelection);
+				players.get(counter).play(uncoveredDomino);
 			}
 			if (counter == players.size() - 1) {
 				counter = 0;

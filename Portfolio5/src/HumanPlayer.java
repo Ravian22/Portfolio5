@@ -33,7 +33,7 @@ public class HumanPlayer extends Player {
 		Domino playedDomino;
 		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
 		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", showPossibleSelection(uncoveredDomino));
-		if (possibleSelection.get(selectedInput) == null) {
+		if (selectedInput >= possibleSelection.size() ) {
 			playedDomino = null;
 		} else {
 			playedDomino = possibleSelection.get(selectedInput);

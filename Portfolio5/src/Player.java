@@ -64,16 +64,11 @@ public abstract class Player {
 				possibleSelections.add(domino);
 			}
 		}
-		possibleSelections.add(null);
 		return possibleSelections;
 	}
 
 	public boolean canPlay(Domino uncoveredDomino) {
-		boolean canPlay = true;
-		if (getPossibleSelection(uncoveredDomino).get(0) == null) {
-			canPlay = false;
-		}
-		return canPlay;
+		return !getPossibleSelection(uncoveredDomino).isEmpty();
 	}
 
 	public String[] showAllPlayerDominos() {
