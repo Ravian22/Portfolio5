@@ -15,10 +15,8 @@ public abstract class Player {
 
 	public abstract String[] showPossibleSelection(Domino uncoveredDomino);
 
-	public abstract Domino selectDomino(int selectedNumber, Domino uncoveredDomino);
-	
 	public abstract Domino play(Domino uncoveredDomino);
-	
+
 	public abstract int chooseSide();
 
 	public void addDomino(Domino domino) {
@@ -51,18 +49,22 @@ public abstract class Player {
 	}
 
 	/**
-	 * All possible selections are added, plus one domino = null to represent the
-	 * option to draw a new domino.
+	 * All possible selections are added.
 	 * 
 	 * @param uncoveredDomino
 	 * @return List<Domino> called possibleSelections
 	 */
 	public List<Domino> getPossibleSelection(Domino uncoveredDomino) {
+
 		List<Domino> possibleSelections = new ArrayList<Domino>();
-		for (Domino domino : playersDominos) {
-			if (uncoveredDomino.fitsDomino(domino)) {
-				possibleSelections.add(domino);
+		try {
+			for (Domino domino : playersDominos) {
+				if (uncoveredDomino.fitsDomino(domino)) {
+					possibleSelections.add(domino);
+				}
 			}
+		} catch (NullPointerException e) {
+			System.out.println("Es wurde kein offen aufgedeckter Stein gefunden.");
 		}
 		return possibleSelections;
 	}
@@ -81,5 +83,9 @@ public abstract class Player {
 
 	public void clearDominos() {
 		playersDominos.clear();
+	}
+	
+	public void displayMove() {
+		System.out.println();
 	}
 }

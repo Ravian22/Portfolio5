@@ -11,20 +11,34 @@ public class DominoGame {
 	private Domino uncoveredDomino;
 	private List<Domino> dominos;
 	private List<Player> players;
+	private int numberOfComputerPlayers;
+	private int numberOfHumanPlayers;
 
-	public DominoGame() {
+	public DominoGame(int numberOfComputerPlayers, int numberOfHumanPlayers) {
 		dominos = new ArrayList<Domino>();
 		players = new ArrayList<Player>();
+		this.numberOfComputerPlayers = numberOfComputerPlayers;
+		this.numberOfHumanPlayers = numberOfHumanPlayers;
+		setPlayers(false);
 	}
-	
+
 	// Just for testing at the moment.
 	public void setDominos(List<Domino> dominos) {
 		this.dominos = dominos;
 	}
-	
+
 	// Just for testing at the moment.
 	public List<Domino> getDominos() {
 		return dominos;
+	}
+
+	public void setPlayers(boolean randomComputer) {
+		for (int i = 0; i < numberOfHumanPlayers; i++) {
+			players.add(new HumanPlayer());
+		}
+		for (int i = 0; i < numberOfComputerPlayers; i++) {
+			players.add(new ComputerPlayer(randomComputer));
+		}
 	}
 
 	public void setupGame() {
@@ -35,37 +49,55 @@ public class DominoGame {
 		for (Player player : players) {
 			player.clearDominos();
 		}
-		dealOutDomninos();
+		try {
+			dealOutDomninos();
+			uncoveredDomino = dominos.get(0);
+			dominos.remove(0);
+		} catch (NullPointerException | IndexOutOfBoundsException e) {
+			System.out.println("Zu viele Spieler !");
+			System.out.println("Es können höchstens 4 Spieler angelegt werden.");
 
-		uncoveredDomino = dominos.get(0);
-		dominos.remove(0);
+		}
+
 	}
 
 	public void play() {
 		setupGame();
 		int counter = 0;
-		while (gameRunning() && !drawGame()) {
+		while (gameRunning()) {
 			Domino playedDomino;
+			Player player = players.get(counter);
 
-			if (!players.get(counter).isComputer()) {
-				printPlayerMove(players.get(counter));
-				if (players.get(counter).canPlay(uncoveredDomino)) {
-					playedDomino = players.get(counter).play(uncoveredDomino);
-					if(playedDomino.fitsBothSides(uncoveredDomino)) {
-						if (players.get(counter).chooseSide() == NUMBER_FIT_DOMINO_LEFT) {
-							uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
-						} else {
-							uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
+			if (!player.isComputer()) {
+				printPlay(player);
+				if (player.canPlay(uncoveredDomino)) {
+					playedDomino = player.play(uncoveredDomino);
+					if (playedDomino == null) {
+						drawDomino(player);
+					} else {
+						if (playedDomino.fitsBothSides(uncoveredDomino)) {
+							if (players.get(counter).chooseSide() == NUMBER_FIT_DOMINO_LEFT) {
+								uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
+							} else {
+								uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
+							}
 						}
+						setUncoveredDomino(playedDomino);
 					}
 				} else {
 					System.out.println("Keine Auswahlmöglichkeit");
 					drawDomino(players.get(0));
 				}
 			} else {
-				printComputerMove(players.get(counter));
-				players.get(counter).play(uncoveredDomino);
+				printPlay(player);
+				playedDomino = player.play(uncoveredDomino);
+				if (playedDomino == null) {
+					drawDomino(player);
+				} else {
+					setUncoveredDomino(playedDomino);
+				}
 			}
+
 			if (counter == players.size() - 1) {
 				counter = 0;
 			} else {
@@ -81,8 +113,8 @@ public class DominoGame {
 	}
 
 	public void dealOutDomninos() {
-		for(Player player: players) {
-			for(int i= 0; i<5; i++) {
+		for (Player player : players) {
+			for (int i = 0; i < 5; i++) {
 				player.addDomino(dominos.get(0));
 				dominos.remove(0);
 			}
@@ -108,39 +140,17 @@ public class DominoGame {
 		boolean gameRunning = true;
 		int counter = 0;
 		while (gameRunning && counter < players.size()) {
-			gameRunning = players.get(counter).hasDominos();
+			gameRunning = players.get(counter).canPlay(uncoveredDomino);
 			counter++;
 		}
 		boolean playing = gameRunning || !dominos.isEmpty();
 		return playing;
 	}
 
-	public boolean drawGame() {
-		boolean draw = true;
-		int counter = 0;
-		while (draw && counter < players.size()) {
-			if (players.get(counter).canPlay(uncoveredDomino) || !dominos.isEmpty()) {
-				draw = false;
-			} else {
-				draw = true;
-				counter++;
-			}
-		}
-		return draw;
-	}
 
-	public void printPlayerMove(Player player) {
+	public void printPlay(Player player) {
 		System.out.print("Anlegemöglichkeit: ");
 		System.out.println(uncoveredDomino.showDomino());
-		System.out.print("Ihre Steine: ");
-		System.out.println(Arrays.toString(player.showAllPlayerDominos()));
-		System.out.println("Steine im Spiel: " + dominos.size());
-	}
-
-	public void printComputerMove(Player player) {
-		System.out.print("Anlegemöglichkeit: ");
-		System.out.println(uncoveredDomino.showDomino());
-		System.out.print("Ich: ");
 	}
 
 	public void processEndOfGame() {
@@ -160,10 +170,6 @@ public class DominoGame {
 		newGame[1] = "Ja";
 
 		System.out.println("Spielende");
-		if (drawGame()) {
-			System.out.println(uncoveredDomino.showDomino());
-			System.out.println("Keine weiteren Züge möglich.");
-		}
 		for (Player player : players) {
 			if (player.isComputer()) {
 				System.out.print("Ich: ");

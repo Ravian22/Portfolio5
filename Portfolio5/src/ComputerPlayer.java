@@ -1,5 +1,6 @@
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
+
 
 public class ComputerPlayer extends Player {
 
@@ -15,43 +16,37 @@ public class ComputerPlayer extends Player {
 		return chooseRandom;
 	}
 
-	public Domino selectDomino(int selectedNumber, Domino uncoveredDomino) {
-		Domino selectedDomino;
+	public Domino play(Domino uncoveredDomino) {
+		Domino playedDomino;
 		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
-
-		if (isRandom()) {
-			selectedNumber = ThreadLocalRandom.current().nextInt(RANDOM_NUMBER_MIN_VALUE, possibleSelection.size());
+		int selectedInput;
+		Random random = new Random();
+		
+		if(isRandom()) {
+			if(canPlay(uncoveredDomino)) {
+				selectedInput = random.nextInt(possibleSelection.size());
+			} else {
+				selectedInput = 0;
+			}
 		} else {
-			selectedNumber = 0;
+			selectedInput = 0;
 		}
-		selectedDomino = possibleSelection.get(selectedNumber);
-		if (playersDominos.contains(selectedDomino)) {
-			playersDominos.remove(selectedDomino);
+		System.out.print("Ich: ");
+		if (selectedInput >= possibleSelection.size() ) {
+			playedDomino = null;
+			System.out.println("ziehe");
+		} else {
+			playedDomino = possibleSelection.get(selectedInput);
+			System.out.println(possibleSelection.get(selectedInput).showDomino());
+			playersDominos.remove(playedDomino);
 		}
-		return selectedDomino;
+		return playedDomino;	
 	}
 
 	@Override
 	public String[] showPossibleSelection(Domino uncoveredDomino) {
+		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public Domino play(Domino uncoveredDomino) {
-		int selectedNumber;
-		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
-		
-		if(isRandom()) {
-			selectedNumber = ThreadLocalRandom.current().nextInt(RANDOM_NUMBER_MIN_VALUE, possibleSelection.size());
-		} else {
-			selectedNumber = 0;
-		}
-		if (possibleSelection.get(selectedNumber) == null) {
-			System.out.println("ziehe");
-		} else {
-			System.out.println(possibleSelection.get(selectedNumber).showDomino());
-		}
-		return possibleSelection.get(selectedNumber);
 	}
 
 	@Override
@@ -59,5 +54,4 @@ public class ComputerPlayer extends Player {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
