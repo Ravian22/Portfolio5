@@ -84,8 +84,5 @@ public abstract class Player {
 	public void clearDominos() {
 		playersDominos.clear();
 	}
-	
-	public void displayMove() {
-		System.out.println();
-	}
+
 }

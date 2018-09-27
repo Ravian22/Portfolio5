@@ -14,12 +14,12 @@ public class DominoGame {
 	private int numberOfComputerPlayers;
 	private int numberOfHumanPlayers;
 
-	public DominoGame(int numberOfComputerPlayers, int numberOfHumanPlayers) {
+	public DominoGame(int numberOfComputerPlayers, int numberOfHumanPlayers, boolean randomComputer) {
 		dominos = new ArrayList<Domino>();
 		players = new ArrayList<Player>();
 		this.numberOfComputerPlayers = numberOfComputerPlayers;
 		this.numberOfHumanPlayers = numberOfHumanPlayers;
-		setPlayers(false);
+		setPlayers(randomComputer);
 	}
 
 	// Just for testing at the moment.
@@ -56,7 +56,6 @@ public class DominoGame {
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			System.out.println("Zu viele Spieler !");
 			System.out.println("Es können höchstens 4 Spieler angelegt werden.");
-
 		}
 
 	}
@@ -68,37 +67,22 @@ public class DominoGame {
 			Domino playedDomino;
 			Player player = players.get(counter);
 
-			if (!player.isComputer()) {
-				printPlay(player);
-				if (player.canPlay(uncoveredDomino)) {
-					playedDomino = player.play(uncoveredDomino);
-					if (playedDomino == null) {
-						drawDomino(player);
-					} else {
-						if (playedDomino.fitsBothSides(uncoveredDomino)) {
-							if (players.get(counter).chooseSide() == NUMBER_FIT_DOMINO_LEFT) {
-								uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
-							} else {
-								uncoveredDomino = new Domino(playedDomino.getLeft(), uncoveredDomino.getRight());
-							}
-						}
-						setUncoveredDomino(playedDomino);
-					}
-				} else {
-					System.out.println("Keine Auswahlmöglichkeit");
-					drawDomino(players.get(0));
-				}
-			} else {
-				printPlay(player);
+			printPlay(player);
+			
+			// For Debug
+			System.out.println(dominos.size());
+			if (player.canPlay(uncoveredDomino)) {
 				playedDomino = player.play(uncoveredDomino);
 				if (playedDomino == null) {
 					drawDomino(player);
 				} else {
 					setUncoveredDomino(playedDomino);
 				}
+			} else {
+				System.out.println("Keine Anlegemöglichkeit.");
+				drawDomino(player);
 			}
-
-			if (counter == players.size() - 1) {
+			if(counter == players.size()-1) {
 				counter = 0;
 			} else {
 				counter++;
@@ -146,7 +130,6 @@ public class DominoGame {
 		boolean playing = gameRunning || !dominos.isEmpty();
 		return playing;
 	}
-
 
 	public void printPlay(Player player) {
 		System.out.print("Anlegemöglichkeit: ");

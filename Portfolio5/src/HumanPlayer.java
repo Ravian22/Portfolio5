@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 
 public class HumanPlayer extends Player {
@@ -19,11 +20,11 @@ public class HumanPlayer extends Player {
 	}
 
 	public Domino play(Domino uncoveredDomino) {
+		System.out.println("Ihre Steine: " + Arrays.toString(showAllPlayerDominos()));
 		Userdialog userDialog = new Userdialog();
 		Domino playedDomino;
 		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
 		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", showPossibleSelection(uncoveredDomino));
-		
 		if (selectedInput == possibleSelection.size() ) {
 			playedDomino = null;
 		} else {

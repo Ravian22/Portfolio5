@@ -17,6 +17,7 @@ public class ComputerPlayer extends Player {
 	}
 
 	public Domino play(Domino uncoveredDomino) {
+		System.out.print("Ich: ");
 		Domino playedDomino;
 		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
 		int selectedInput;
@@ -31,7 +32,6 @@ public class ComputerPlayer extends Player {
 		} else {
 			selectedInput = 0;
 		}
-		System.out.print("Ich: ");
 		if (selectedInput >= possibleSelection.size() ) {
 			playedDomino = null;
 			System.out.println("ziehe");
