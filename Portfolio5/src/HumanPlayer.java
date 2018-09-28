@@ -7,18 +7,6 @@ public class HumanPlayer extends Player {
 		super(false);
 	}
 
-	public String[] showPossibleSelection(Domino uncoveredDomino) {
-
-		List<Domino> possibleSelections = getPossibleSelection(uncoveredDomino);
-		String[] selectionString = new String[getPossibleSelection(uncoveredDomino).size()+1];
-
-		for (int i = 0; i < possibleSelections.size(); i++) {
-				selectionString[i] = possibleSelections.get(i).showDomino();
-			}
-		selectionString[selectionString.length -1] ="ziehen";
-		return selectionString;
-	}
-
 	public Domino play(Domino uncoveredDomino) {
 		System.out.println("Ihre Steine: " + Arrays.toString(showAllPlayerDominos()));
 		Userdialog userDialog = new Userdialog();

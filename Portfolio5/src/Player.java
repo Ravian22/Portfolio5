@@ -13,8 +13,6 @@ public abstract class Player {
 		playersDrawback = 0;
 	}
 
-	public abstract String[] showPossibleSelection(Domino uncoveredDomino);
-
 	public abstract Domino play(Domino uncoveredDomino);
 
 	public abstract int chooseSide();
@@ -48,6 +46,18 @@ public abstract class Player {
 		return hasDominos;
 	}
 
+	public String[] showPossibleSelection(Domino uncoveredDomino) {
+
+		List<Domino> possibleSelections = getPossibleSelection(uncoveredDomino);
+		String[] selectionString = new String[getPossibleSelection(uncoveredDomino).size() + 1];
+
+		for (int i = 0; i < possibleSelections.size(); i++) {
+			selectionString[i] = possibleSelections.get(i).toString();
+		}
+		selectionString[selectionString.length - 1] = "ziehen";
+		return selectionString;
+	}
+
 	/**
 	 * All possible selections are added.
 	 * 
@@ -76,7 +86,7 @@ public abstract class Player {
 	public String[] showAllPlayerDominos() {
 		String[] allPlayerDominos = new String[playersDominos.size()];
 		for (int i = 0; i < playersDominos.size(); i++) {
-			allPlayerDominos[i] = playersDominos.get(i).showDomino();
+			allPlayerDominos[i] = playersDominos.get(i).toString();
 		}
 		return allPlayerDominos;
 	}

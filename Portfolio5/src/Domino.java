@@ -16,8 +16,9 @@ public class Domino {
 	public int getRight() {
 		return right;
 	}
-	
-	public String showDomino() {
+
+	@Override
+	public String toString() {
 		String domino = "[" + getLeft() + "|" + getRight() + "]";
 		return domino;
 	}

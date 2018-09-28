@@ -63,33 +63,39 @@ public class DominoGame {
 	public void play() {
 		setupGame();
 		int counter = 0;
-		while (gameRunning()) {
-			Domino playedDomino;
-			Player player = players.get(counter);
+		try {
+			while (gameRunning()) {
+				Domino playedDomino;
+				Player player = players.get(counter);
 
-			printPlay(player);
-			
-			// For Debug
-			System.out.println(dominos.size());
-			if (player.canPlay(uncoveredDomino)) {
-				playedDomino = player.play(uncoveredDomino);
-				if (playedDomino == null) {
-					drawDomino(player);
+				printPlay(player);
+
+				// For Debug
+				System.out.println(dominos.size());
+				if (player.canPlay(uncoveredDomino)) {
+					playedDomino = player.play(uncoveredDomino);
+					if (playedDomino == null) {
+						drawDomino(player);
+					} else {
+						setUncoveredDomino(playedDomino);
+					}
 				} else {
-					setUncoveredDomino(playedDomino);
+					System.out.println("Keine Anlegemöglichkeit.");
+					drawDomino(player);
 				}
-			} else {
-				System.out.println("Keine Anlegemöglichkeit.");
-				drawDomino(player);
+				if (counter == players.size() - 1) {
+					counter = 0;
+				} else {
+					counter++;
+				}
 			}
-			if(counter == players.size()-1) {
-				counter = 0;
-			} else {
-				counter++;
-			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Zu wenig Spieler !");
+			System.out.println("Es muss mindestens ein Spieler geben.");
 		}
 		processEndOfGame();
 		showEndOfGame();
+
 	}
 
 	public void addPlayer(Player player) {
@@ -133,7 +139,7 @@ public class DominoGame {
 
 	public void printPlay(Player player) {
 		System.out.print("Anlegemöglichkeit: ");
-		System.out.println(uncoveredDomino.showDomino());
+		System.out.println(uncoveredDomino.toString());
 	}
 
 	public void processEndOfGame() {
