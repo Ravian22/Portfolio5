@@ -35,11 +35,11 @@ class TestPortfolio {
 		humanPlayer.addDomino(domino3);
 		humanPlayer.addDomino(domino4);
 		humanPlayer.addDomino(domino5);
-		assertTrue(humanPlayer.getPossibleSelection(uncoveredDomino).contains(domino1));
-		assertTrue(humanPlayer.getPossibleSelection(uncoveredDomino).contains(domino2));
-		assertTrue(humanPlayer.getPossibleSelection(uncoveredDomino).contains(domino3));
-		assertTrue(humanPlayer.getPossibleSelection(uncoveredDomino).contains(domino4));
-		assertFalse(humanPlayer.getPossibleSelection(uncoveredDomino).contains(domino5));
+		assertTrue(humanPlayer.getFittingDominos(uncoveredDomino).contains(domino1));
+		assertTrue(humanPlayer.getFittingDominos(uncoveredDomino).contains(domino2));
+		assertTrue(humanPlayer.getFittingDominos(uncoveredDomino).contains(domino3));
+		assertTrue(humanPlayer.getFittingDominos(uncoveredDomino).contains(domino4));
+		assertFalse(humanPlayer.getFittingDominos(uncoveredDomino).contains(domino5));
 	}
 
 	@Test

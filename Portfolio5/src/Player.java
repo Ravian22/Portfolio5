@@ -39,7 +39,6 @@ public abstract class Player {
 
 	public boolean hasDominos() {
 		boolean hasDominos = true;
-
 		if (playersDominos.isEmpty()) {
 			hasDominos = false;
 		}
@@ -47,9 +46,8 @@ public abstract class Player {
 	}
 
 	public String[] showPossibleSelection(Domino uncoveredDomino) {
-
-		List<Domino> possibleSelections = getPossibleSelection(uncoveredDomino);
-		String[] selectionString = new String[getPossibleSelection(uncoveredDomino).size() + 1];
+		List<Domino> possibleSelections = getFittingDominos(uncoveredDomino);
+		String[] selectionString = new String[possibleSelections.size() + 1];
 
 		for (int i = 0; i < possibleSelections.size(); i++) {
 			selectionString[i] = possibleSelections.get(i).toString();
@@ -64,8 +62,7 @@ public abstract class Player {
 	 * @param uncoveredDomino
 	 * @return List<Domino> called possibleSelections
 	 */
-	public List<Domino> getPossibleSelection(Domino uncoveredDomino) {
-
+	public List<Domino> getFittingDominos(Domino uncoveredDomino) {
 		List<Domino> possibleSelections = new ArrayList<Domino>();
 		try {
 			for (Domino domino : playersDominos) {
@@ -80,7 +77,7 @@ public abstract class Player {
 	}
 
 	public boolean canPlay(Domino uncoveredDomino) {
-		return !getPossibleSelection(uncoveredDomino).isEmpty();
+		return !getFittingDominos(uncoveredDomino).isEmpty();
 	}
 
 	public String[] showAllPlayerDominos() {

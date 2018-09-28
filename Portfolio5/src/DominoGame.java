@@ -4,10 +4,7 @@ import java.util.List;
 
 public class DominoGame {
 
-	public static final int NUMBER_FIT_DOMINO_LEFT = 0;
-	public static final int NUMBER_FIT_DOMINO_RIGHT = 1;
 	private DominoPool dominoPool;
-	private Userdialog userDialog;
 	private Domino uncoveredDomino;
 	private List<Domino> dominos;
 	private List<Player> players;
@@ -43,7 +40,6 @@ public class DominoGame {
 
 	public void setupGame() {
 		dominoPool = new DominoPool();
-		userDialog = new Userdialog();
 		dominos = dominoPool.provideShuffledDominoHeap();
 
 		for (Player player : players) {
@@ -154,6 +150,7 @@ public class DominoGame {
 	}
 
 	public void showEndOfGame() {
+		Userdialog userDialog = new Userdialog();
 		String[] newGame = new String[2];
 		newGame[0] = "Nein";
 		newGame[1] = "Ja";

@@ -19,34 +19,28 @@ public class ComputerPlayer extends Player {
 	public Domino play(Domino uncoveredDomino) {
 		System.out.print("Ich: ");
 		Domino playedDomino;
-		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
+		List<Domino> possibleSelection = getFittingDominos(uncoveredDomino);
 		int selectedInput;
-		Random random = new Random();
+		Random randomGenerator = new Random();
 		
 		if(isRandom()) {
 			if(canPlay(uncoveredDomino)) {
-				selectedInput = random.nextInt(possibleSelection.size());
+				selectedInput = randomGenerator.nextInt(possibleSelection.size());
 			} else {
 				selectedInput = 0;
 			}
 		} else {
 			selectedInput = 0;
 		}
-		if (selectedInput >= possibleSelection.size() ) {
+		if (selectedInput == possibleSelection.size() ) {
 			playedDomino = null;
 			System.out.println("ziehe");
 		} else {
 			playedDomino = possibleSelection.get(selectedInput);
-			System.out.println(possibleSelection.get(selectedInput).showDomino());
+			System.out.println(possibleSelection.get(selectedInput).toString());
 			playersDominos.remove(playedDomino);
 		}
 		return playedDomino;	
-	}
-
-	@Override
-	public String[] showPossibleSelection(Domino uncoveredDomino) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

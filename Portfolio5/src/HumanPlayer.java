@@ -11,7 +11,7 @@ public class HumanPlayer extends Player {
 		System.out.println("Ihre Steine: " + Arrays.toString(showAllPlayerDominos()));
 		Userdialog userDialog = new Userdialog();
 		Domino playedDomino;
-		List<Domino> possibleSelection = getPossibleSelection(uncoveredDomino);
+		List<Domino> possibleSelection = getFittingDominos(uncoveredDomino);
 		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", showPossibleSelection(uncoveredDomino));
 		if (selectedInput == possibleSelection.size() ) {
 			playedDomino = null;
