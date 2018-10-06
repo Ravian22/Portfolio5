@@ -25,7 +25,8 @@ public class ComputerPlayer extends Player {
 		
 		if(isRandom()) {
 			if(canPlay(uncoveredDomino)) {
-				selectedInput = randomGenerator.nextInt(possibleSelection.size());
+				selectedInput = randomGenerator.nextInt(possibleSelection.size()+1);
+				System.out.println("Nummer: " + selectedInput);
 			} else {
 				selectedInput = 0;
 			}

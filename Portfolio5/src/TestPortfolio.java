@@ -68,7 +68,7 @@ class TestPortfolio {
 
 	@Test
 	public void dealOutDomninos() {
-		DominoGame game = new DominoGame();
+		DominoGame game = new DominoGame(0,0,false);
 		Player player1 = new HumanPlayer();
 		Player player2 = new HumanPlayer();
 		game.addPlayer(player1);
