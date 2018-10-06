@@ -51,7 +51,6 @@ public class DominoGame {
 			System.out.println("Zu viele Spieler !");
 			System.out.println("Es können höchstens 4 Spieler angelegt werden.");
 		}
-
 	}
 
 	public void play() {
@@ -101,7 +100,7 @@ public class DominoGame {
 		players.add(player);
 	}
 
-	public void dealOutDomninos() {
+	private void dealOutDomninos() {
 		for (Player player : players) {
 			for (int i = 0; i < 5; i++) {
 				player.addDomino(dominos.get(0));
@@ -110,14 +109,14 @@ public class DominoGame {
 		}
 	}
 
-	public void drawDomino(Player player) {
+	private void drawDomino(Player player) {
 		if (!dominos.isEmpty()) {
 			player.addDomino(dominos.get(0));
 			dominos.remove(0);
 		}
 	}
 
-	public void setAttachableEnds(Domino domino) {
+	private void setAttachableEnds(Domino domino) {
 		if (attachableEnds.getRight() == domino.getLeft()) {
 			attachableEnds = new Domino(attachableEnds.getLeft(), domino.getRight());
 		} else {
@@ -125,7 +124,7 @@ public class DominoGame {
 		}
 	}
 
-	public boolean gameRunning() {
+	private boolean gameRunning() {
 		boolean gameRunning = true;
 		int counter = 0;
 		while (gameRunning && counter < players.size()) {
@@ -136,12 +135,12 @@ public class DominoGame {
 		return playing;
 	}
 
-	public void printAttachableEnds(Player player) {
+	private void printAttachableEnds(Player player) {
 		System.out.print("Anlegemöglichkeit: ");
 		System.out.println(attachableEnds.toString());
 	}
 
-	public void printEndOfGame() {
+	private void printEndOfGame() {
 		Userdialog userDialog = new Userdialog();
 
 		System.out.println("Spielende");

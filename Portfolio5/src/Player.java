@@ -30,10 +30,6 @@ public abstract class Player {
 		playersDominos.remove(domino);
 	}
 
-	public List<Domino> getPlayersDominos() {
-		return playersDominos;
-	}
-
 	public void clearDominos() {
 		playersDominos.clear();
 	}
@@ -59,6 +55,13 @@ public abstract class Player {
 		System.out.println("Meine Minuspunkte: " + getPlayersDrawback());
 	}
 
+	/**
+	 * Returns a String array of all dominos which fits the domino in the middle of
+	 * the game.
+	 * 
+	 * @param attachableEnds
+	 * @return selectionString
+	 */
 	protected String[] fittingDominosString(Domino attachableEnds) {
 		List<Domino> possibleSelections = getFittingDominos(attachableEnds);
 		String[] selectionString = new String[possibleSelections.size() + 1];
@@ -90,7 +93,12 @@ public abstract class Player {
 		return possibleSelections;
 	}
 
-	public String[] allPlayersDominosString() {
+	/**
+	 * Returns a String array of all dominos of a player.
+	 * 
+	 * @return allPlayerDominos
+	 */
+	protected String[] allPlayersDominosString() {
 		String[] allPlayerDominos = new String[playersDominos.size()];
 		for (int i = 0; i < playersDominos.size(); i++) {
 			allPlayerDominos[i] = playersDominos.get(i).toString();

@@ -31,7 +31,7 @@ public class HumanPlayer extends Player {
 	}
 
 	/*
-	 * The human player can choose on which side he wants to attach the domino, if
+	 * The human player can choose on which side he wants to attach the domino if
 	 * it fits both sides of the domnio in the middle.
 	 */
 	@Override
