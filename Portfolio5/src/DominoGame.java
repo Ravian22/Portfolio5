@@ -45,7 +45,7 @@ public class DominoGame {
 			attachableEnds = dominos.get(0);
 			dominos.remove(0);
 		} catch (NullPointerException e) {
-			System.out.println("Nicht genug Dominos");
+			System.out.println("Keine Dominos im Spiel.");
 		} catch (IndexOutOfBoundsException e) {
 			// This error is possible if too many players are added to the game.
 			System.out.println("Zu viele Spieler !");
