@@ -7,13 +7,14 @@ public class HumanPlayer extends Player {
 		super();
 	}
 
+	@Override
 	public Domino play(Domino attachableEnds) {
 		System.out.println("Ihre Steine: " + Arrays.toString(showAllPlayerDominos()));
 		Userdialog userDialog = new Userdialog();
 		Domino playedDomino;
 		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
 		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", showPossibleSelection(attachableEnds));
-		if (selectedInput == possibleSelection.size() ) {
+		if (selectedInput == possibleSelection.size()) {
 			playedDomino = null;
 		} else {
 			playedDomino = possibleSelection.get(selectedInput);
@@ -21,7 +22,12 @@ public class HumanPlayer extends Player {
 		}
 		return playedDomino;
 	}
-	
+
+	/*
+	 * The human player can choose on which side he wants to attach the domino, if
+	 * it fits both sides of the domnio in the middle.
+	 */
+	@Override
 	public int chooseSide() {
 		Userdialog userDialog = new Userdialog();
 		String[] chooseSide = new String[2];

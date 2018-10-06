@@ -1,20 +1,12 @@
 import java.util.List;
-import java.util.Random;
-
 
 public class ComputerPlayer extends Player {
 
-	private boolean choosesRandom;
-
 	public ComputerPlayer(boolean random) {
 		super();
-		choosesRandom = random;
 	}
 
-	public boolean isRandom() {
-		return choosesRandom;
-	}
-
+	@Override
 	public Domino play(Domino attachableEnds) {
 		System.out.print("Ich: ");
 		Domino playedDomino;
@@ -33,9 +25,11 @@ public class ComputerPlayer extends Player {
 		return playedDomino;	
 	}
 
+	/**
+	 * The computer Player will always choose the first side to attach the domino.
+	 */
 	@Override
 	public int chooseSide() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

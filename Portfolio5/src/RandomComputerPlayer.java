@@ -10,14 +10,14 @@ public class RandomComputerPlayer extends Player {
 		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
 		int selectedInput;
 		Random randomGenerator = new Random();
-		
-		if(canPlay(attachableEnds)) {
-			selectedInput = randomGenerator.nextInt(possibleSelection.size()+1);
+
+		if (canPlay(attachableEnds)) {
+			selectedInput = randomGenerator.nextInt(possibleSelection.size() + 1);
 			System.out.println("Nummer: " + selectedInput);
 		} else {
 			selectedInput = 0;
 		}
-		if (selectedInput == possibleSelection.size() ) {
+		if (selectedInput == possibleSelection.size()) {
 			playedDomino = null;
 			System.out.println("ziehe");
 		} else {
@@ -25,12 +25,14 @@ public class RandomComputerPlayer extends Player {
 			System.out.println(playedDomino.toString());
 			playersDominos.remove(playedDomino);
 		}
-		return playedDomino;	
+		return playedDomino;
 	}
 
+	/**
+	 * The computer Player will always choose the first side to attach the domino.
+	 */
 	@Override
 	public int chooseSide() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

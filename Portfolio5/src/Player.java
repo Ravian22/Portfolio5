@@ -11,7 +11,7 @@ public abstract class Player {
 		playersDrawback = 0;
 	}
 
-	public abstract Domino play(Domino attachableEnds);
+	public abstract Domino play(Domino uncoveredDomino);
 
 	public abstract int chooseSide();
 
