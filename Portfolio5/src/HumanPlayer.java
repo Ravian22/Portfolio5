@@ -4,15 +4,15 @@ import java.util.List;
 public class HumanPlayer extends Player {
 
 	public HumanPlayer() {
-		super(false);
+		super();
 	}
 
-	public Domino play(Domino uncoveredDomino) {
+	public Domino play(Domino attachableEnds) {
 		System.out.println("Ihre Steine: " + Arrays.toString(showAllPlayerDominos()));
 		Userdialog userDialog = new Userdialog();
 		Domino playedDomino;
-		List<Domino> possibleSelection = getFittingDominos(uncoveredDomino);
-		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", showPossibleSelection(uncoveredDomino));
+		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
+		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", showPossibleSelection(attachableEnds));
 		if (selectedInput == possibleSelection.size() ) {
 			playedDomino = null;
 		} else {

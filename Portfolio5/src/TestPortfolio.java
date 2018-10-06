@@ -66,24 +66,14 @@ class TestPortfolio {
 		assertTrue(humanPlayer.canPlay(uncoveredDomino));
 	}
 
-	@Test
-	public void dealOutDomninos() {
-		DominoGame game = new DominoGame(0,0,false);
-		Player player1 = new HumanPlayer();
-		Player player2 = new HumanPlayer();
-		game.addPlayer(player1);
-		game.addPlayer(player2);
-		List<Domino> heapOfDominoes = new LinkedList<>();
-		for (int left = 0; left < MAX_NUMBER_ON_DOMINO; left++) {
-			for (int right = 0; right < MAX_NUMBER_ON_DOMINO; right++) {
-				heapOfDominoes.add(new Domino(left, right));
-			}
-		}
-		game.setDominos(heapOfDominoes);
-		game.dealOutDomninos();
-		assertEquals(5, player1.playersDominos.size());
-		assertEquals(5, player2.playersDominos.size());
-		assertEquals(15, game.getDominos().size());
-	}
-
+//	@Test
+//	public void dealOutDomninos() {
+//		DominoGame game = new DominoGame(0,0,false);
+//		Player player1 = new HumanPlayer();
+//		Player player2 = new HumanPlayer();
+//		game.addPlayer(player1);
+//		game.addPlayer(player2);
+//		assertEquals(5, player1.playersDominos.size());
+//		assertEquals(5, player2.playersDominos.size());
+//	}
 }

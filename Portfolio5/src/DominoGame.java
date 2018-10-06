@@ -5,7 +5,7 @@ import java.util.List;
 public class DominoGame {
 
 	private DominoPool dominoPool;
-	private Domino uncoveredDomino;
+	private Domino attachableEnds;
 	private List<Domino> dominos;
 	private List<Player> players;
 	private int numberOfComputerPlayers;
@@ -19,17 +19,7 @@ public class DominoGame {
 		setPlayers(randomComputer);
 	}
 
-	// Just for testing at the moment.
-	public void setDominos(List<Domino> dominos) {
-		this.dominos = dominos;
-	}
-
-	// Just for testing at the moment.
-	public List<Domino> getDominos() {
-		return dominos;
-	}
-
-	public void setPlayers(boolean randomComputer) {
+	private void setPlayers(boolean randomComputer) {
 		for (int i = 0; i < numberOfHumanPlayers; i++) {
 			players.add(new HumanPlayer());
 		}
@@ -38,7 +28,7 @@ public class DominoGame {
 		}
 	}
 
-	public void setupGame() {
+	private void setupGame() {
 		dominoPool = new DominoPool();
 		dominos = dominoPool.provideShuffledDominoHeap();
 
@@ -47,7 +37,7 @@ public class DominoGame {
 		}
 		try {
 			dealOutDomninos();
-			uncoveredDomino = dominos.get(0);
+			attachableEnds = dominos.get(0);
 			dominos.remove(0);
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			System.out.println("Zu viele Spieler !");
@@ -64,12 +54,10 @@ public class DominoGame {
 				Domino playedDomino;
 				Player player = players.get(counter);
 
-				printPlay(player);
-
-				// For Debug
-				System.out.println(dominos.size());
-				if (player.canPlay(uncoveredDomino)) {
-					playedDomino = player.play(uncoveredDomino);
+				print(player);
+				
+				if (player.canPlay(attachableEnds)) {
+					playedDomino = player.play(attachableEnds);
 					if (playedDomino == null) {
 						drawDomino(player);
 					} else {
@@ -90,7 +78,7 @@ public class DominoGame {
 			System.out.println("Es muss mindestens ein Spieler geben.");
 		}
 		processEndOfGame();
-		showEndOfGame();
+		printEndOfGame();
 
 	}
 
@@ -115,10 +103,10 @@ public class DominoGame {
 	}
 
 	public void setUncoveredDomino(Domino domino) {
-		if (uncoveredDomino.getRight() == domino.getLeft()) {
-			uncoveredDomino = new Domino(uncoveredDomino.getLeft(), domino.getRight());
+		if (attachableEnds.getRight() == domino.getLeft()) {
+			attachableEnds = new Domino(attachableEnds.getLeft(), domino.getRight());
 		} else {
-			uncoveredDomino = new Domino(domino.getLeft(), uncoveredDomino.getRight());
+			attachableEnds = new Domino(domino.getLeft(), attachableEnds.getRight());
 		}
 	}
 
@@ -126,16 +114,16 @@ public class DominoGame {
 		boolean gameRunning = true;
 		int counter = 0;
 		while (gameRunning && counter < players.size()) {
-			gameRunning = players.get(counter).canPlay(uncoveredDomino);
+			gameRunning = players.get(counter).canPlay(attachableEnds);
 			counter++;
 		}
 		boolean playing = gameRunning || !dominos.isEmpty();
 		return playing;
 	}
 
-	public void printPlay(Player player) {
+	public void print(Player player) {
 		System.out.print("Anlegemöglichkeit: ");
-		System.out.println(uncoveredDomino.toString());
+		System.out.println(attachableEnds.toString());
 	}
 
 	public void processEndOfGame() {
@@ -149,11 +137,8 @@ public class DominoGame {
 		}
 	}
 
-	public void showEndOfGame() {
+	public void printEndOfGame() {
 		Userdialog userDialog = new Userdialog();
-		String[] newGame = new String[2];
-		newGame[0] = "Nein";
-		newGame[1] = "Ja";
 
 		System.out.println("Spielende");
 		for (Player player : players) {
@@ -167,7 +152,7 @@ public class DominoGame {
 				System.out.println("Ihre Minuspunkte: " + player.getPlayersDrawback());
 			}
 		}
-		int selectedInput = userDialog.getUserInput("Neues Spiel ?: ", newGame);
+		int selectedInput = userDialog.getUserInput("Neues Spiel ?: ", "Nein","Ja");
 		if (selectedInput == 0) {
 			System.out.println("Tschüss");
 		} else {

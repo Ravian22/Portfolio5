@@ -5,26 +5,26 @@ import java.util.Random;
 public class ComputerPlayer extends Player {
 
 	public static final int RANDOM_NUMBER_MIN_VALUE = 0;
-	private boolean chooseRandom;
+	private boolean choosesRandom;
 
 	public ComputerPlayer(boolean random) {
-		super(true);
-		chooseRandom = random;
+		super();
+		choosesRandom = random;
 	}
 
 	public boolean isRandom() {
-		return chooseRandom;
+		return choosesRandom;
 	}
 
-	public Domino play(Domino uncoveredDomino) {
+	public Domino play(Domino attachableEnds) {
 		System.out.print("Ich: ");
 		Domino playedDomino;
-		List<Domino> possibleSelection = getFittingDominos(uncoveredDomino);
+		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
 		int selectedInput;
 		Random randomGenerator = new Random();
 		
 		if(isRandom()) {
-			if(canPlay(uncoveredDomino)) {
+			if(canPlay(attachableEnds)) {
 				selectedInput = randomGenerator.nextInt(possibleSelection.size()+1);
 				System.out.println("Nummer: " + selectedInput);
 			} else {

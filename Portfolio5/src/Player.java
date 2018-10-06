@@ -4,25 +4,19 @@ import java.util.List;
 public abstract class Player {
 
 	protected List<Domino> playersDominos;
-	private boolean isComputer;
 	private int playersDrawback;
 
-	public Player(boolean isComputer) {
+	public Player() {
 		playersDominos = new ArrayList<Domino>();
-		this.isComputer = isComputer;
 		playersDrawback = 0;
 	}
 
-	public abstract Domino play(Domino uncoveredDomino);
+	public abstract Domino play(Domino attachableEnds);
 
 	public abstract int chooseSide();
 
 	public void addDomino(Domino domino) {
 		playersDominos.add(domino);
-	}
-
-	public boolean isComputer() {
-		return isComputer;
 	}
 
 	public List<Domino> getPlayersDominos() {
@@ -57,10 +51,11 @@ public abstract class Player {
 	}
 
 	/**
-	 * All possible selections are added.
+	 * This method returns all dominos which fits the uncovered domino in the and
+	 * are playable.
 	 * 
 	 * @param uncoveredDomino
-	 * @return List<Domino> called possibleSelections
+	 * @return List<Domino> possibleSelections
 	 */
 	public List<Domino> getFittingDominos(Domino uncoveredDomino) {
 		List<Domino> possibleSelections = new ArrayList<Domino>();
