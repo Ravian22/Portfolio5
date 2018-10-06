@@ -18,7 +18,7 @@ public class HumanPlayer extends Player {
 			playedDomino = null;
 		} else {
 			playedDomino = possibleSelection.get(selectedInput);
-			playersDominos.remove(playedDomino);
+			removeDomino(playedDomino);
 		}
 		return playedDomino;
 	}

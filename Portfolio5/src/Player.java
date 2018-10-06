@@ -3,7 +3,7 @@ import java.util.List;
 
 public abstract class Player {
 
-	protected List<Domino> playersDominos;
+	private List<Domino> playersDominos;
 	private int playersDrawback;
 
 	public Player() {
@@ -17,6 +17,10 @@ public abstract class Player {
 
 	public void addDomino(Domino domino) {
 		playersDominos.add(domino);
+	}
+	
+	public void removeDomino(Domino domino) {
+		playersDominos.remove(domino);
 	}
 
 	public List<Domino> getPlayersDominos() {
@@ -39,7 +43,7 @@ public abstract class Player {
 		return hasDominos;
 	}
 
-	public String[] showPossibleSelection(Domino uncoveredDomino) {
+	protected String[] showPossibleSelection(Domino uncoveredDomino) {
 		List<Domino> possibleSelections = getFittingDominos(uncoveredDomino);
 		String[] selectionString = new String[possibleSelections.size() + 1];
 
@@ -57,7 +61,7 @@ public abstract class Player {
 	 * @param uncoveredDomino
 	 * @return List<Domino> possibleSelections
 	 */
-	public List<Domino> getFittingDominos(Domino uncoveredDomino) {
+	protected List<Domino> getFittingDominos(Domino uncoveredDomino) {
 		List<Domino> possibleSelections = new ArrayList<Domino>();
 		try {
 			for (Domino domino : playersDominos) {

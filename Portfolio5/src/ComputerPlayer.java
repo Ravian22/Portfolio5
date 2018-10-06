@@ -20,7 +20,7 @@ public class ComputerPlayer extends Player {
 		} else {
 			playedDomino = possibleSelection.get(selectedInput);
 			System.out.println(playedDomino.toString());
-			playersDominos.remove(playedDomino);
+			removeDomino(playedDomino);
 		}
 		return playedDomino;	
 	}
