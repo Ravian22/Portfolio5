@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DominoGame {
@@ -13,7 +13,7 @@ public class DominoGame {
 	private int numberOfRandomComputers;
 
 	public DominoGame(int numberOfHumanPlayers, int numberOfComputerPlayers, int numberOfRandomComputers) {
-		dominos = new ArrayList<Domino>();
+		dominos = new LinkedList<Domino>();
 		players = new ArrayList<Player>();
 		this.numberOfComputerPlayers = numberOfComputerPlayers;
 		this.numberOfHumanPlayers = numberOfHumanPlayers;
@@ -35,12 +35,12 @@ public class DominoGame {
 
 	private void setupGame() {
 		dominoPool = new DominoPool();
-		dominos = dominoPool.provideShuffledDominoHeap();
 
 		for (Player player : players) {
 			player.clearDominos();
 		}
 		try {
+			dominos = dominoPool.provideShuffledDominoHeap();
 			dealOutDomninos();
 			attachableEnds = dominos.get(0);
 			dominos.remove(0);
@@ -93,7 +93,6 @@ public class DominoGame {
 			System.out.println("Zu wenig Spieler !");
 			System.out.println("Es muss mindestens ein Spieler geben.");
 		}
-		updatePlayersDrawback();
 		printEndOfGame();
 
 	}
@@ -142,22 +141,12 @@ public class DominoGame {
 		System.out.println(attachableEnds.toString());
 	}
 
-	public void updatePlayersDrawback() {
-		for (Player player : players) {
-			int drawback = player.getPlayersDrawback();
-			for (Domino domino : player.getPlayersDominos()) {
-				drawback += domino.getLeft();
-				drawback += domino.getRight();
-			}
-			player.setPlayersDrawback(drawback);
-		}
-	}
-
 	public void printEndOfGame() {
 		Userdialog userDialog = new Userdialog();
 
 		System.out.println("Spielende");
 		for (Player player : players) {
+			player.updateDrawback();
 			player.printPlayersDrawback();
 		}
 		int selectedInput = userDialog.getUserInput("Neues Spiel ?: ", "Nein", "Ja");

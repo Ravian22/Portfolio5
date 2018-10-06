@@ -14,12 +14,18 @@ public abstract class Player {
 
 	public abstract Domino play(Domino attachableEnds);
 
-	public abstract int chooseSide();
+	/**
+	 * The computer Player will always choose the first side to attach the domino.
+	 * The method is overridden for the human player.
+	 */
+	public int chooseSide() {
+		return 0;
+	}
 
 	public void addDomino(Domino domino) {
 		playersDominos.add(domino);
 	}
-	
+
 	public void removeDomino(Domino domino) {
 		playersDominos.remove(domino);
 	}
@@ -27,7 +33,7 @@ public abstract class Player {
 	public List<Domino> getPlayersDominos() {
 		return playersDominos;
 	}
-	
+
 	public void clearDominos() {
 		playersDominos.clear();
 	}
@@ -36,21 +42,24 @@ public abstract class Player {
 		return playersDrawback;
 	}
 
-	public void setPlayersDrawback(int playersDrawback) {
-		this.playersDrawback = playersDrawback;
+	public void updateDrawback() {
+		for (Domino domino : playersDominos) {
+			playersDrawback += domino.getLeft();
+			playersDrawback += domino.getRight();
+		}
 	}
-	
+
 	public boolean canPlay(Domino uncoveredDomino) {
 		return !getFittingDominos(uncoveredDomino).isEmpty();
 	}
-	
+
 	public void printPlayersDrawback() {
 		System.out.print("Ich: ");
-		System.out.println(Arrays.toString(showAllPlayerDominos()));
+		System.out.println(Arrays.toString(allPlayersDominosString()));
 		System.out.println("Meine Minuspunkte: " + getPlayersDrawback());
 	}
 
-	protected String[] showPossibleSelection(Domino attachableEnds) {
+	protected String[] fittingDominosString(Domino attachableEnds) {
 		List<Domino> possibleSelections = getFittingDominos(attachableEnds);
 		String[] selectionString = new String[possibleSelections.size() + 1];
 
@@ -81,7 +90,7 @@ public abstract class Player {
 		return possibleSelections;
 	}
 
-	public String[] showAllPlayerDominos() {
+	public String[] allPlayersDominosString() {
 		String[] allPlayerDominos = new String[playersDominos.size()];
 		for (int i = 0; i < playersDominos.size(); i++) {
 			allPlayerDominos[i] = playersDominos.get(i).toString();

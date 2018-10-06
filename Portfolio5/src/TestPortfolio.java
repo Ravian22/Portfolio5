@@ -42,29 +42,29 @@ class TestPortfolio {
 		assertFalse(humanPlayer.getFittingDominos(uncoveredDomino).contains(domino5));
 	}
 
-	@Test
-	void canPlay() {
-		Player humanPlayer = new HumanPlayer();
-		Domino uncoveredDomino = new Domino(0, 0);
-		Domino domino1 = new Domino(1, 1);
-		Domino domino2 = new Domino(1, 2);
-		Domino domino3 = new Domino(1, 3);
-		Domino domino4 = new Domino(1, 4);
-		Domino domino5 = new Domino(2, 2);
-		Domino domino6 = new Domino(2, 0);
-		Domino domino7 = new Domino(0, 4);
-		humanPlayer.addDomino(domino1);
-		humanPlayer.addDomino(domino2);
-		humanPlayer.addDomino(domino3);
-		humanPlayer.addDomino(domino4);
-		humanPlayer.addDomino(domino5);
-		assertFalse(humanPlayer.canPlay(uncoveredDomino));
-		humanPlayer.addDomino(domino6);
-		assertTrue(humanPlayer.canPlay(uncoveredDomino));
-		humanPlayer.playersDominos.remove(domino6);
-		humanPlayer.addDomino(domino7);
-		assertTrue(humanPlayer.canPlay(uncoveredDomino));
-	}
+//	@Test
+//	void canPlay() {
+//		Player humanPlayer = new HumanPlayer();
+//		Domino uncoveredDomino = new Domino(0, 0);
+//		Domino domino1 = new Domino(1, 1);
+//		Domino domino2 = new Domino(1, 2);
+//		Domino domino3 = new Domino(1, 3);
+//		Domino domino4 = new Domino(1, 4);
+//		Domino domino5 = new Domino(2, 2);
+//		Domino domino6 = new Domino(2, 0);
+//		Domino domino7 = new Domino(0, 4);
+//		humanPlayer.addDomino(domino1);
+//		humanPlayer.addDomino(domino2);
+//		humanPlayer.addDomino(domino3);
+//		humanPlayer.addDomino(domino4);
+//		humanPlayer.addDomino(domino5);
+//		assertFalse(humanPlayer.canPlay(uncoveredDomino));
+//		humanPlayer.addDomino(domino6);
+//		assertTrue(humanPlayer.canPlay(uncoveredDomino));
+//		humanPlayer.playersDominos.remove(domino6);
+//		humanPlayer.addDomino(domino7);
+//		assertTrue(humanPlayer.canPlay(uncoveredDomino));
+//	}
 
 //	@Test
 //	public void dealOutDomninos() {

@@ -1,6 +1,8 @@
 import java.util.List;
 
 public class ComputerPlayer extends Player {
+	
+	private static final int COMPUTER_SELECTION_NUMBER = 0;
 
 	public ComputerPlayer() {
 		super();
@@ -11,25 +13,15 @@ public class ComputerPlayer extends Player {
 		System.out.print("Ich: ");
 		Domino playedDomino;
 		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
-		int selectedInput;
-		selectedInput = 0;
 		
-		if (selectedInput == possibleSelection.size() ) {
+		if (possibleSelection.size() == COMPUTER_SELECTION_NUMBER) {
 			playedDomino = null;
 			System.out.println("ziehe");
 		} else {
-			playedDomino = possibleSelection.get(selectedInput);
+			playedDomino = possibleSelection.get(COMPUTER_SELECTION_NUMBER);
 			System.out.println(playedDomino.toString());
 			removeDomino(playedDomino);
 		}
 		return playedDomino;	
 	}
-
-	/**
-	 * The computer Player will always choose the first side to attach the domino.
-	 */
-	@Override
-	public int chooseSide() {
-		return 0;
-	}	
 }

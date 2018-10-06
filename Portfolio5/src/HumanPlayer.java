@@ -10,17 +10,17 @@ public class HumanPlayer extends Player {
 	@Override
 	public void printPlayersDrawback() {
 		System.out.print("Sie: ");
-		System.out.println(Arrays.toString(showAllPlayerDominos()));
+		System.out.println(Arrays.toString(allPlayersDominosString()));
 		System.out.println("Ihre Minuspunkte: " + getPlayersDrawback());
 	}
 
 	@Override
 	public Domino play(Domino attachableEnds) {
-		System.out.println("Ihre Steine: " + Arrays.toString(showAllPlayerDominos()));
+		System.out.println("Ihre Steine: " + Arrays.toString(allPlayersDominosString()));
 		Userdialog userDialog = new Userdialog();
 		Domino playedDomino;
 		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
-		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", showPossibleSelection(attachableEnds));
+		int selectedInput = userDialog.getUserInput("Auswahlmölichkeiten: ", fittingDominosString(attachableEnds));
 		if (selectedInput == possibleSelection.size()) {
 			playedDomino = null;
 		} else {

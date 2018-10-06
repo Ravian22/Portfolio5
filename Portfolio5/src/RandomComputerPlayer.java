@@ -26,13 +26,4 @@ public class RandomComputerPlayer extends Player {
 		}
 		return playedDomino;
 	}
-
-	/**
-	 * The computer Player will always choose the first side to attach the domino.
-	 */
-	@Override
-	public int chooseSide() {
-		return 0;
-	}
-
 }
