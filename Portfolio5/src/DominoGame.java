@@ -10,21 +10,26 @@ public class DominoGame {
 	private List<Player> players;
 	private int numberOfComputerPlayers;
 	private int numberOfHumanPlayers;
+	private int numberOfRandomComputers;
 
-	public DominoGame(int numberOfComputerPlayers, int numberOfHumanPlayers, boolean randomComputer) {
+	public DominoGame(int numberOfHumanPlayers, int numberOfComputerPlayers, int numberOfRandomComputers) {
 		dominos = new ArrayList<Domino>();
 		players = new ArrayList<Player>();
 		this.numberOfComputerPlayers = numberOfComputerPlayers;
 		this.numberOfHumanPlayers = numberOfHumanPlayers;
-		setPlayers(randomComputer);
+		this.numberOfRandomComputers = numberOfRandomComputers;
+		setPlayers();
 	}
 
-	private void setPlayers(boolean randomComputer) {
+	private void setPlayers() {
 		for (int i = 0; i < numberOfHumanPlayers; i++) {
 			players.add(new HumanPlayer());
 		}
 		for (int i = 0; i < numberOfComputerPlayers; i++) {
-			players.add(new ComputerPlayer(randomComputer));
+			players.add(new ComputerPlayer());
+		}
+		for (int i = 0; i < numberOfRandomComputers; i++) {
+			players.add(new RandomComputerPlayer());
 		}
 	}
 
@@ -142,15 +147,7 @@ public class DominoGame {
 
 		System.out.println("Spielende");
 		for (Player player : players) {
-			if (player.isComputer()) {
-				System.out.print("Ich: ");
-				System.out.println(Arrays.toString(player.showAllPlayerDominos()));
-				System.out.println("Meine Minuspunkte: " + player.getPlayersDrawback());
-			} else {
-				System.out.print("Sie: ");
-				System.out.println(Arrays.toString(player.showAllPlayerDominos()));
-				System.out.println("Ihre Minuspunkte: " + player.getPlayersDrawback());
-			}
+			player.printPlayersDrawback();
 		}
 		int selectedInput = userDialog.getUserInput("Neues Spiel ?: ", "Nein","Ja");
 		if (selectedInput == 0) {

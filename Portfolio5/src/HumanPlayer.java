@@ -6,6 +6,13 @@ public class HumanPlayer extends Player {
 	public HumanPlayer() {
 		super();
 	}
+	
+	@Override
+	public void printPlayersDrawback() {
+		System.out.print("Sie: ");
+		System.out.println(Arrays.toString(showAllPlayerDominos()));
+		System.out.println("Ihre Minuspunkte: " + getPlayersDrawback());
+	}
 
 	@Override
 	public Domino play(Domino attachableEnds) {

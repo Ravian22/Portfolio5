@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Player {
@@ -11,7 +12,7 @@ public abstract class Player {
 		playersDrawback = 0;
 	}
 
-	public abstract Domino play(Domino uncoveredDomino);
+	public abstract Domino play(Domino attachableEnds);
 
 	public abstract int chooseSide();
 
@@ -26,6 +27,10 @@ public abstract class Player {
 	public List<Domino> getPlayersDominos() {
 		return playersDominos;
 	}
+	
+	public void clearDominos() {
+		playersDominos.clear();
+	}
 
 	public int getPlayersDrawback() {
 		return playersDrawback;
@@ -34,17 +39,19 @@ public abstract class Player {
 	public void setPlayersDrawback(int playersDrawback) {
 		this.playersDrawback = playersDrawback;
 	}
-
-	public boolean hasDominos() {
-		boolean hasDominos = true;
-		if (playersDominos.isEmpty()) {
-			hasDominos = false;
-		}
-		return hasDominos;
+	
+	public boolean canPlay(Domino uncoveredDomino) {
+		return !getFittingDominos(uncoveredDomino).isEmpty();
+	}
+	
+	public void printPlayersDrawback() {
+		System.out.print("Ich: ");
+		System.out.println(Arrays.toString(showAllPlayerDominos()));
+		System.out.println("Meine Minuspunkte: " + getPlayersDrawback());
 	}
 
-	protected String[] showPossibleSelection(Domino uncoveredDomino) {
-		List<Domino> possibleSelections = getFittingDominos(uncoveredDomino);
+	protected String[] showPossibleSelection(Domino attachableEnds) {
+		List<Domino> possibleSelections = getFittingDominos(attachableEnds);
 		String[] selectionString = new String[possibleSelections.size() + 1];
 
 		for (int i = 0; i < possibleSelections.size(); i++) {
@@ -55,17 +62,16 @@ public abstract class Player {
 	}
 
 	/**
-	 * This method returns all dominos which fits the uncovered domino in the and
-	 * are playable.
+	 * This method returns all dominos which fits the uncovered domino.
 	 * 
-	 * @param uncoveredDomino
+	 * @param attachableEnds
 	 * @return List<Domino> possibleSelections
 	 */
-	protected List<Domino> getFittingDominos(Domino uncoveredDomino) {
+	protected List<Domino> getFittingDominos(Domino attachableEnds) {
 		List<Domino> possibleSelections = new ArrayList<Domino>();
 		try {
 			for (Domino domino : playersDominos) {
-				if (uncoveredDomino.fitsDomino(domino)) {
+				if (attachableEnds.fitsDomino(domino)) {
 					possibleSelections.add(domino);
 				}
 			}
@@ -75,10 +81,6 @@ public abstract class Player {
 		return possibleSelections;
 	}
 
-	public boolean canPlay(Domino uncoveredDomino) {
-		return !getFittingDominos(uncoveredDomino).isEmpty();
-	}
-
 	public String[] showAllPlayerDominos() {
 		String[] allPlayerDominos = new String[playersDominos.size()];
 		for (int i = 0; i < playersDominos.size(); i++) {
@@ -86,9 +88,4 @@ public abstract class Player {
 		}
 		return allPlayerDominos;
 	}
-
-	public void clearDominos() {
-		playersDominos.clear();
-	}
-
 }

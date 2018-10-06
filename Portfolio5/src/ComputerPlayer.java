@@ -1,8 +1,9 @@
+import java.util.Arrays;
 import java.util.List;
 
 public class ComputerPlayer extends Player {
 
-	public ComputerPlayer(boolean random) {
+	public ComputerPlayer() {
 		super();
 	}
 
@@ -31,5 +32,5 @@ public class ComputerPlayer extends Player {
 	@Override
 	public int chooseSide() {
 		return 0;
-	}
+	}	
 }

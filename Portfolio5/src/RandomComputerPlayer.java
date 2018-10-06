@@ -13,7 +13,6 @@ public class RandomComputerPlayer extends Player {
 
 		if (canPlay(attachableEnds)) {
 			selectedInput = randomGenerator.nextInt(possibleSelection.size() + 1);
-			System.out.println("Nummer: " + selectedInput);
 		} else {
 			selectedInput = 0;
 		}
