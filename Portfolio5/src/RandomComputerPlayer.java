@@ -1,27 +1,22 @@
 import java.util.List;
 import java.util.Random;
 
+public class RandomComputerPlayer extends Player {
 
-public class ComputerPlayer extends Player {
-
-	private boolean choosesRandom;
-
-	public ComputerPlayer(boolean random) {
-		super();
-		choosesRandom = random;
-	}
-
-	public boolean isRandom() {
-		return choosesRandom;
-	}
-
+	@Override
 	public Domino play(Domino attachableEnds) {
 		System.out.print("Ich: ");
 		Domino playedDomino;
 		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
 		int selectedInput;
+		Random randomGenerator = new Random();
 		
-		selectedInput = 0;
+		if(canPlay(attachableEnds)) {
+			selectedInput = randomGenerator.nextInt(possibleSelection.size()+1);
+			System.out.println("Nummer: " + selectedInput);
+		} else {
+			selectedInput = 0;
+		}
 		if (selectedInput == possibleSelection.size() ) {
 			playedDomino = null;
 			System.out.println("ziehe");
@@ -38,4 +33,5 @@ public class ComputerPlayer extends Player {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }
