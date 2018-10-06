@@ -37,11 +37,7 @@ public class HumanPlayer extends Player {
 	@Override
 	public int chooseSide() {
 		Userdialog userDialog = new Userdialog();
-		String[] chooseSide = new String[2];
-		chooseSide[0] = "links anlegen";
-		chooseSide[1] = "rechts anlegen";
-		System.out.println("Auswahlmöglichkeiten: ");
-		int side = userDialog.getUserInput("Auswahlmölichkeiten: ", chooseSide);
+		int side = userDialog.getUserInput("Auswahlmölichkeiten: ", "links anlegen","rechts anlegen");
 		return side;
 	}
 }

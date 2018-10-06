@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.List;
 
 public class ComputerPlayer extends Player {
@@ -13,8 +12,8 @@ public class ComputerPlayer extends Player {
 		Domino playedDomino;
 		List<Domino> possibleSelection = getFittingDominos(attachableEnds);
 		int selectedInput;
-		
 		selectedInput = 0;
+		
 		if (selectedInput == possibleSelection.size() ) {
 			playedDomino = null;
 			System.out.println("ziehe");

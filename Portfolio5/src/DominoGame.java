@@ -44,7 +44,10 @@ public class DominoGame {
 			dealOutDomninos();
 			attachableEnds = dominos.get(0);
 			dominos.remove(0);
-		} catch (NullPointerException | IndexOutOfBoundsException e) {
+		} catch (NullPointerException e) {
+			System.out.println("Nicht genug Dominos");
+		} catch (IndexOutOfBoundsException e) {
+			// This error is possible if too many players are added to the game.
 			System.out.println("Zu viele Spieler !");
 			System.out.println("Es können höchstens 4 Spieler angelegt werden.");
 		}
@@ -59,14 +62,22 @@ public class DominoGame {
 				Domino playedDomino;
 				Player player = players.get(counter);
 
-				print(player);
-				
+				printAttachableEnds(player);
+
 				if (player.canPlay(attachableEnds)) {
 					playedDomino = player.play(attachableEnds);
 					if (playedDomino == null) {
 						drawDomino(player);
 					} else {
-						setUncoveredDomino(playedDomino);
+						if (playedDomino.fitsBothSides(attachableEnds)) {
+							if (player.chooseSide() == 0) {
+								attachableEnds = new Domino(playedDomino.getLeft(), attachableEnds.getRight());
+							} else {
+								attachableEnds = new Domino(attachableEnds.getLeft(), playedDomino.getRight());
+							}
+						} else {
+							setAttachableEnds(playedDomino);
+						}
 					}
 				} else {
 					System.out.println("Keine Anlegemöglichkeit.");
@@ -82,7 +93,7 @@ public class DominoGame {
 			System.out.println("Zu wenig Spieler !");
 			System.out.println("Es muss mindestens ein Spieler geben.");
 		}
-		processEndOfGame();
+		updatePlayersDrawback();
 		printEndOfGame();
 
 	}
@@ -107,7 +118,7 @@ public class DominoGame {
 		}
 	}
 
-	public void setUncoveredDomino(Domino domino) {
+	public void setAttachableEnds(Domino domino) {
 		if (attachableEnds.getRight() == domino.getLeft()) {
 			attachableEnds = new Domino(attachableEnds.getLeft(), domino.getRight());
 		} else {
@@ -126,12 +137,12 @@ public class DominoGame {
 		return playing;
 	}
 
-	public void print(Player player) {
+	public void printAttachableEnds(Player player) {
 		System.out.print("Anlegemöglichkeit: ");
 		System.out.println(attachableEnds.toString());
 	}
 
-	public void processEndOfGame() {
+	public void updatePlayersDrawback() {
 		for (Player player : players) {
 			int drawback = player.getPlayersDrawback();
 			for (Domino domino : player.getPlayersDominos()) {
@@ -149,7 +160,7 @@ public class DominoGame {
 		for (Player player : players) {
 			player.printPlayersDrawback();
 		}
-		int selectedInput = userDialog.getUserInput("Neues Spiel ?: ", "Nein","Ja");
+		int selectedInput = userDialog.getUserInput("Neues Spiel ?: ", "Nein", "Ja");
 		if (selectedInput == 0) {
 			System.out.println("Tschüss");
 		} else {
