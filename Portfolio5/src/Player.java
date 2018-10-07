@@ -19,6 +19,7 @@ public abstract class Player {
 	 * The method is overridden for the human player.
 	 */
 	public int chooseSide() {
+		System.out.println("Ich: links anlegen");
 		return 0;
 	}
 
