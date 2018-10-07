@@ -2,7 +2,7 @@ import java.util.List;
 
 public class ComputerPlayer extends Player {
 	
-	private static final int COMPUTER_SELECTION_NUMBER = 0;
+	public static final int COMPUTER_SELECTION_NUMBER = 0;
 
 	public ComputerPlayer() {
 		super();
